@@ -11,6 +11,7 @@ A production-ready Docker Swarm application with:
 
 ## 📁 Folder Structure
 
+```bash
 project-root/
 ├── backend/
 │ ├── src/
@@ -44,6 +45,7 @@ project-root/
 │ └── Dockerfile (optional if using official image)
 ├── sample-compose.yml
 └── README.md
+```
 
 
 ---
@@ -124,7 +126,7 @@ Boots Express server, initializes MongoDB and Redis, sets middleware, and regist
 - backend/src/routes/users.ts
 Provides CRUD API with Mongoose and Redis caching
 
-frontend/app/
+- frontend/app/
 Implements listing, detail, and edit user pages using Next.js App Router
 
 - frontend/app/api/proxy/route.ts
