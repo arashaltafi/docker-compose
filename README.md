@@ -184,5 +184,5 @@ Feel free to ask if you'd like assistance with any of these enhancements!
 
 ## 🙏 Contributions & Support
 
-Contributions are welcome—please submit issues or pull requests.
-For questions or guidance, feel free to contact me.
+- Contributions are welcome—please submit issues or pull requests.
+- For questions or guidance, feel free to contact me.
