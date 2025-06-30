@@ -1,7 +1,7 @@
 version: "3.8"
 networks:
   appnet:
-    driver: overlay
+    external: true
 
 volumes:
   mongo-data:
@@ -46,7 +46,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/proxy_params:/etc/nginx/proxy_params:ro
     ports:
-      - "80:80"
+      - "8080:80"
     networks: [appnet]
     deploy:
       placement:

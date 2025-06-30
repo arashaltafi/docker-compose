@@ -47,7 +47,7 @@ router.put('/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
         await User_1.default.findByIdAndUpdate(id, req.body);
-        await cache_1.redis.del(`user:${id}`, 'users:all');
+        await cache_1.redis.del([`user:${id}`, 'users:all']);
         res.json({ msg: 'Updated' });
     }
     catch (err) {
@@ -59,7 +59,7 @@ router.delete('/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
         await User_1.default.findByIdAndDelete(id);
-        await cache_1.redis.del(`user:${id}`, 'users:all');
+        await cache_1.redis.del([`user:${id}`, 'users:all']);
         res.json({ msg: 'Deleted' });
     }
     catch (err) {
