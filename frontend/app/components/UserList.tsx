@@ -1,7 +1,7 @@
 'use client';
 
+import { IUser } from '@/types';
 import Link from 'next/link';
-import type { IUser } from '../types';
 
 export default function UserList({ users, onDelete }: { users: IUser[]; onDelete?: (id: string) => void }) {
     return (

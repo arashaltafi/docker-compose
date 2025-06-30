@@ -1,12 +1,13 @@
-import UserForm from '../../../../components/UserForm';
-import { IUser } from '../../../../types';
+import UserForm from "@/app/components/UserForm";
+import { IUser } from "@/types";
 
 async function getUser(id: string): Promise<IUser> {
     const res = await fetch(`/api/proxy/users/${id}`, { cache: 'no-store' });
     return res.json();
 }
 
-export default async function EditUser({ params: { id } }: { params: { id: string } }) {
+export default async function EditUser({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const user = await getUser(id);
     return (
         <>

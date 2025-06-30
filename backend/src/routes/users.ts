@@ -41,7 +41,7 @@ router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     await User.findByIdAndUpdate(id, req.body);
-    await redis.del(`user:${id}`, 'users:all');
+    await redis.del([`user:${id}`, 'users:all']);
     res.json({ msg: 'Updated' });
   } catch (err) { next(err); }
 });
@@ -51,7 +51,7 @@ router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     await User.findByIdAndDelete(id);
-    await redis.del(`user:${id}`, 'users:all');
+    await redis.del([`user:${id}`, 'users:all']);
     res.json({ msg: 'Deleted' });
   } catch (err) { next(err); }
 });

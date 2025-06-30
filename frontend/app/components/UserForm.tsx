@@ -1,7 +1,7 @@
 'use client';
 
+import { IUser } from '@/types';
 import { useState } from 'react';
-import type { IUser } from '../types';
 
 export default function UserForm({ user, onSave }: { user?: IUser; onSave: (u: Partial<IUser>) => void }) {
     const [name, setName] = useState(user?.name || '');
