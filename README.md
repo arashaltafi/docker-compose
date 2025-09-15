@@ -9,8 +9,8 @@ A production-ready Docker Swarm application with:
 
 ---
 
-docker compose -f sample-compose.yml up -d
-docker compose -f sample-compose.yml down
+- docker compose -f sample-compose.yml up -d
+- docker compose -f sample-compose.yml down
 
 ## 📁 Folder Structure
 
