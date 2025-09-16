@@ -46,6 +46,17 @@
 ### Follow logs continuously
 - docker service logs -f <service_name>
 
+### Stop all services in a stack without removing the stack
+- docker service scale my_stack_frontend=0 my_stack_backend=0 my_stack_mongo=0 my_stack_redis=0 my_stack_nginx=0
+
+### Scale a specific service
+- docker service scale my_stack_frontend=3
+
+### Exec into a running container of a service
+- docker exec -it <container_id_or_name> bash
+
+### Check running containers in the swarm
+- docker ps
 ----------------------------
 
 **What this delivers**
