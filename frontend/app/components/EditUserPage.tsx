@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IUser } from '@/types';
 
 export default function EditUserPage() {
@@ -16,8 +16,7 @@ export default function EditUserPage() {
             try {
                 const res = await fetch(`/api/proxy/users/${id}`, { cache: 'no-store' });
                 if (!res.ok) throw new Error('User not found');
-                const data: IUser = await res.json();
-                setUser(data);
+                setUser(await res.json());
             } catch {
                 setUser(null);
             } finally {
@@ -32,37 +31,38 @@ export default function EditUserPage() {
     if (!user) return <p>User not found.</p>;
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <div className="p-6">
-                <h1 className="text-xl mb-4">Edit User</h1>
-                <form
-                    onSubmit={async (e) => {
-                        e.preventDefault();
-                        const res = await fetch(`/api/proxy/users/${id}`, {
-                            method: 'PUT',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(user),
-                        });
-                        if (!res.ok) alert('Error updating user');
-                    }}
+        <div className="bg-white p-6 rounded shadow max-w-md mx-auto">
+            <h1 className="text-xl font-bold mb-4">Edit User</h1>
+            <form
+                onSubmit={async e => {
+                    e.preventDefault();
+                    const res = await fetch(`/api/proxy/users/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(user),
+                    });
+                    if (!res.ok) alert('Error updating user');
+                }}
+            >
+                <input
+                    type="text"
+                    value={user.name}
+                    onChange={e => setUser({ ...user, name: e.target.value })}
+                    className="border p-2 w-full mb-4 rounded"
+                />
+                <input
+                    type="email"
+                    value={user.email}
+                    onChange={e => setUser({ ...user, email: e.target.value })}
+                    className="border p-2 w-full mb-4 rounded"
+                />
+                <button
+                    type="submit"
+                    className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded shadow"
                 >
-                    <input
-                        type="text"
-                        value={user.name}
-                        onChange={(e) => setUser({ ...user, name: e.target.value })}
-                        className="border p-2 w-full mb-4"
-                    />
-                    <input
-                        type="email"
-                        value={user.email}
-                        onChange={(e) => setUser({ ...user, email: e.target.value })}
-                        className="border p-2 w-full mb-4"
-                    />
-                    <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-                        Save
-                    </button>
-                </form>
-            </div>
-        </Suspense>
+                    Save
+                </button>
+            </form>
+        </div>
     );
 }

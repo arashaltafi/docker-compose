@@ -1,20 +1,16 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
+// app/page.tsx
+import Link from 'next/link';
 
-// Page-specific metadata
-export const metadata: Metadata = {
-  title: 'Dashboard',
-  description: 'View and manage all users',
-}
-
-export default async function HomePage() {
+export default function HomePage() {
   return (
-    <main className="p-6 bg-white rounded shadow">
-      <h1 className="text-3xl font-bold mb-4">User Manager Dashboard</h1>
-      <p className="mb-6">Use the navigation above to view or edit users.</p>
-      <Link href="/users" className="text-blue-600 hover:underline">
+    <div className="bg-white p-8 rounded shadow">
+      <h1 className="text-3xl font-bold mb-4 text-blue-600">Dashboard</h1>
+      <p className="mb-6 text-gray-700">
+        Welcome! Use the navigation to view, edit, or add users.
+      </p>
+      <Link href="/users" className="inline-block bg-blue-600 text-white px-5 py-2 rounded shadow hover:bg-blue-500 transition">
         View All Users →
       </Link>
-    </main>
-  )
+    </div>
+  );
 }
