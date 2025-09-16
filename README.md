@@ -1,7 +1,52 @@
 # Sample Docker Compose + Docker Swarm project
 
+## run with docker compose
 - docker compose build --no-cache
 - docker compose up -d
+
+----------------------------
+
+## run with docker swarm
+
+### Initialize a new Swarm on this node (if not already in a Swarm)
+- docker swarm init
+
+### Leave the current Swarm
+- docker swarm leave
+
+### Force leave if this node is a manager
+- docker swarm leave --force
+
+### Deploy a stack (create/update services defined in compose file)
+- docker build -t frontend:latest ./frontend
+- docker build -t backend:latest ./backend
+- docker stack deploy -c docker-compose.yml my_stack
+
+### List all deployed stacks
+- docker stack ls
+
+### List all services of a specific stack
+- docker stack services my_stack
+
+### Remove a stack (stop and remove all services, networks, volumes created by stack)
+- docker stack rm my_stack
+
+### Show all running services in the swarm
+- docker service ls
+
+### Inspect a service in detail
+- docker service inspect <service_name> --pretty
+
+### Show tasks (containers) of a service
+- docker service ps <service_name>
+
+### Show logs of a service (real-time output)
+- docker service logs <service_name>
+
+### Follow logs continuously
+- docker service logs -f <service_name>
+
+----------------------------
 
 **What this delivers**
 - A complete sample project that runs with either `docker-compose` (local/dev) or `docker stack deploy` (Docker Swarm).
