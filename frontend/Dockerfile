@@ -1,27 +1,30 @@
-# frontend/Dockerfile
+# Use official Node.js 20 image
+FROM node:20-alpine AS base
 
-# 1. Build stage
-FROM node:18-alpine AS builder
+# Create app dir
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci
+
+# Install dependencies
+COPY package.json package-lock.json* ./
+RUN npm install --frozen-lockfile
+
+# Copy source
 COPY . .
+
+# Build Next.js app
 RUN npm run build
 
-# 2. Runtime image
-FROM node:18-alpine AS runner
+# Production image
+FROM node:20-alpine AS runner
 WORKDIR /app
+
 ENV NODE_ENV=production
+ENV PORT=3000
 
-# Install production dependencies including 'next'
-COPY --from=builder /app/package.json /app/package-lock.json ./
-RUN npm ci --only=production
-
-# Copy standalone build output
-COPY --from=builder /app/.next/standalone ./
-# Copy public & static assets
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/static ./.next/static
+# Copy built files and node_modules
+COPY --from=base /app/.next ./.next
+COPY --from=base /app/node_modules ./node_modules
+COPY --from=base /app/package.json ./package.json
 
 EXPOSE 3000
 CMD ["npm", "start"]

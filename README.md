@@ -1,5 +1,8 @@
 # Sample Docker Compose + Docker Swarm project
 
+- docker compose build --no-cache
+- docker compose up -d
+
 **What this delivers**
 - A complete sample project that runs with either `docker-compose` (local/dev) or `docker stack deploy` (Docker Swarm).
 - Services: **front** (Next.js v15 App Router) on port **3000**, **back** (NestJS + MongoDB + Redis) on port **4000**, **mongo**, **redis**, and **nginx** which routes requests for `front.sample.ir`, `back.sample.ir` and serves a custom default HTML.

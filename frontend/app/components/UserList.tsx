@@ -11,7 +11,7 @@ export default function UserList({ users, onDelete }: { users: IUser[]; onDelete
                     <Link href={`/users/${u._id}`} className="font-semibold">{u.name}</Link>
                     <div className="space-x-2">
                         <button onClick={() => onDelete?.(u._id)} className="text-red-600">Delete</button>
-                        <Link href={`/users/${u._id}/edit`} className="text-blue-600">Edit</Link>
+                        <Link href={`/users/edit?id=${u._id}`} className="text-blue-600">Edit</Link>
                     </div>
                 </li>
             ))}

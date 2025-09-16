@@ -1,21 +1,27 @@
 import { IUser } from "@/types";
+import UserDetailClient from "../../components/UserDetailClient";
 
 async function getUser(id: string): Promise<IUser> {
-    const res = await fetch(`/api/proxy/users/${id}`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, {
+        cache: "no-store",
+    });
+    if (!res.ok) throw new Error("User not found");
     return res.json();
 }
 
-export default async function UserDetail({ params }: { params: Promise<{ id: string }> }) {
+export default async function UserDetailPage({
+    params,
+}: {
+    params: Promise<{ id: string }>;  // note: params is now a Promise
+}) {
+    // await params before destructuring
     const { id } = await params;
+    
     const user = await getUser(id);
+
     return (
-        <>
-            <h1 className="text-2xl mb-4">User: {user.name}</h1>
-            <p>Email: {user.email}</p>
-            <button className="mt-4 bg-red-600 text-white px-4 py-2 rounded"
-                onClick={() => fetch(`/api/proxy/users/${id}`, { method: 'DELETE' }).then(() => window.location.href = '/users')}>
-                Delete User
-            </button>
-        </>
+        <div className="p-6">
+            <UserDetailClient user={user} />
+        </div>
     );
 }
