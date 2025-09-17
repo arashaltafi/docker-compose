@@ -8,6 +8,12 @@
 
 ## run with docker swarm
 
+### Remove the wrong local network:
+- docker network rm app_network
+
+### Create it again as a Swarm overlay network:
+- docker network create --driver overlay app_network
+
 ### Initialize a new Swarm on this node (if not already in a Swarm)
 - docker swarm init
 

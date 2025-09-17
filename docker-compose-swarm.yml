@@ -3,7 +3,6 @@ version: "3.9"
 services:
   frontend:
     image: frontend:latest
-    build: ./frontend
     env_file:
       - ./frontend/.env
     ports:
@@ -17,11 +16,13 @@ services:
 
   backend:
     image: backend:latest
-    build: ./backend
     env_file:
       - ./backend/.env
     ports:
       - "4000:4000"
+    depends_on:
+      - mongo
+      - redis
     networks:
       - app_network
     deploy:
@@ -64,12 +65,15 @@ services:
       - ./nginx/html:/usr/share/nginx/html:ro
     networks:
       - app_network
+    depends_on:
+      - frontend
+      - backend
     deploy:
       replicas: 1
 
 networks:
   app_network:
-    driver: overlay
+    external: true
 
 volumes:
   mongo_data:
