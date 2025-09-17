@@ -17,7 +17,7 @@ services:
   backend:
     image: backend:latest
     env_file:
-      - ./backend/.env
+      - ./back/.env
     ports:
       - "4000:4000"
     depends_on:

@@ -1,25 +1,28 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { IUser } from '@/types';
+import { INews } from '@/types';
 
 export default function EditUserPage() {
+    const router = useRouter();
+
     const searchParams = useSearchParams();
     const id = searchParams.get('id');
-    const [user, setUser] = useState<IUser | null>(null);
+    const [news, setNews] = useState<INews | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!id) return;
         async function fetchUser() {
             try {
-                const res = await fetch(`/api/proxy/users/${id}`, { cache: 'no-store' });
+                const res = await fetch(`/api/proxy/news/${id}`, { cache: 'no-store' });
                 if (!res.ok) throw new Error('User not found');
-                setUser(await res.json());
+                setNews(await res.json());
             } catch {
-                setUser(null);
+                setNews(null);
             } finally {
+                router.push('/users');
                 setLoading(false);
             }
         }
@@ -28,7 +31,7 @@ export default function EditUserPage() {
 
     if (!id) return <p>User ID is missing.</p>;
     if (loading) return <p>Loading user...</p>;
-    if (!user) return <p>User not found.</p>;
+    if (!news) return <p>User not found.</p>;
 
     return (
         <div className="bg-white p-6 rounded shadow max-w-md mx-auto">
@@ -36,24 +39,24 @@ export default function EditUserPage() {
             <form
                 onSubmit={async e => {
                     e.preventDefault();
-                    const res = await fetch(`/api/proxy/users/${id}`, {
+                    const res = await fetch(`/api/proxy/news/${id}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(user),
+                        body: JSON.stringify(news),
                     });
                     if (!res.ok) alert('Error updating user');
                 }}
             >
                 <input
                     type="text"
-                    value={user.name}
-                    onChange={e => setUser({ ...user, name: e.target.value })}
+                    value={news.title}
+                    onChange={e => setNews({ ...news, title: e.target.value })}
                     className="border p-2 w-full mb-4 rounded"
                 />
                 <input
-                    type="email"
-                    value={user.email}
-                    onChange={e => setUser({ ...user, email: e.target.value })}
+                    type="text"
+                    value={news.content}
+                    onChange={e => setNews({ ...news, content: e.target.value })}
                     className="border p-2 w-full mb-4 rounded"
                 />
                 <button

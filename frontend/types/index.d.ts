@@ -1,5 +1,5 @@
-export interface IUser {
-    _id: string;
-    name: string;
-    email: string;
+export interface INews {
+    id: number;
+    title: string;
+    content: string;
 }

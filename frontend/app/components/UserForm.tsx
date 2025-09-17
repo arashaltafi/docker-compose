@@ -1,20 +1,20 @@
 'use client';
 
-import { IUser } from '@/types';
+import { INews } from '@/types';
 import { useState } from 'react';
 
-export default function UserForm({ user, onSave }: { user?: IUser; onSave: (u: Partial<IUser>) => void }) {
-    const [name, setName] = useState(user?.name || '');
-    const [email, setEmail] = useState(user?.email || '');
+export default function UserForm({ user, onSave }: { user?: INews; onSave: (u: Partial<INews>) => void }) {
+    const [title, setTitle] = useState(user?.title || '');
+    const [content, setContent] = useState(user?.content || '');
     return (
-        <form onSubmit={e => { e.preventDefault(); onSave({ name, email }); }}>
+        <form onSubmit={e => { e.preventDefault(); onSave({ title, content }); }}>
             <div className="mb-4">
-                <label>Name</label>
-                <input className="border w-full p-2" value={name} onChange={e => setName(e.target.value)} required />
+                <label>title</label>
+                <input className="border w-full p-2" value={title} onChange={e => setTitle(e.target.value)} required />
             </div>
             <div className="mb-4">
-                <label>Email</label>
-                <input className="border w-full p-2" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
+                <label>content</label>
+                <input className="border w-full p-2" value={content} onChange={e => setContent(e.target.value)} required />
             </div>
             <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Save</button>
         </form>

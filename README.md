@@ -26,7 +26,7 @@
 ### Deploy a stack (create/update services defined in compose file)
 - docker build -t frontend:latest ./frontend
 - docker build -t backend:latest ./backend
-- docker stack deploy -c docker-compose.yml my_stack
+- docker stack deploy -c docker-compose-swarm.yml my_stack
 
 ### List all deployed stacks
 - docker stack ls

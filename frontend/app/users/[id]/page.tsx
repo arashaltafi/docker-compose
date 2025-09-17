@@ -1,8 +1,8 @@
-import { IUser } from '@/types';
+import { INews } from '@/types';
 import UserDetailClient from '../../components/UserDetailClient';
 
-async function getUser(id: string): Promise<IUser> {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, { cache: 'no-store' });
+async function getUser(id: string): Promise<INews> {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/news/${id}`, { cache: 'no-store' });
     if (!res.ok) throw new Error('User not found');
     return res.json();
 }

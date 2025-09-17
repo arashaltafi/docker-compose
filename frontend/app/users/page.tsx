@@ -1,16 +1,19 @@
-// app/users/page.tsx
-import { IUser } from '@/types';
+import { INews } from '@/types';
 import UserList from '../components/UserList';
 
-async function getUsers(filter?: string): Promise<IUser[]> {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users${filter ? `?filter=${filter}` : ''}`, { cache: 'no-store' });
+async function getUsers(page = 1, pageSize = 10): Promise<{ items: INews[], totalItems: number }> {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/news/all`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ page, pageSize }),
+        cache: 'no-store',
+    });
     if (!res.ok) throw new Error('Failed to fetch users');
     return res.json();
 }
 
-export default async function UsersPage({ searchParams }: { searchParams: Promise<{ filter?: string }> }) {
-    const { filter } = await searchParams;
-    const users = await getUsers(filter);
+export default async function UsersPage() {
+    const { items: users } = await getUsers();
 
     return (
         <div>
