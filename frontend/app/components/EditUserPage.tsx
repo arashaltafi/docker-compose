@@ -22,7 +22,6 @@ export default function EditUserPage() {
             } catch {
                 setNews(null);
             } finally {
-                router.push('/users');
                 setLoading(false);
             }
         }
@@ -45,6 +44,7 @@ export default function EditUserPage() {
                         body: JSON.stringify(news),
                     });
                     if (!res.ok) alert('Error updating user');
+                    else router.push('/users');
                 }}
             >
                 <input
